@@ -1,0 +1,18 @@
+{% extends 'product_base.html' %}
+
+{% block title %}
+Товары
+{% endblock %}
+
+{% block header %}
+Товары
+{% endblock %}
+
+{% block content %}
+    <h2>{{ product.id ? 'Update' : 'Create' }} Product</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

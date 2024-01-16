@@ -1,0 +1,17 @@
+{% extends 'product_base.html' %}
+
+{% block title %}
+Товары
+{% endblock %}
+
+{% block header %}
+Товары
+{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - {{ product.price }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
