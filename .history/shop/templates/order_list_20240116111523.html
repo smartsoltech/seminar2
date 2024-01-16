@@ -1,0 +1,32 @@
+{% extends 'order_base.html' %}
+
+{% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+заказы
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-6 mb-6">
+            <div class="card h-300">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ order.client.name }}</h4>
+                        <p class="card-text">{{ product.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+

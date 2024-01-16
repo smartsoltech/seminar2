@@ -1,0 +1,18 @@
+{% extends 'order_base.html' %}
+
+{% block title %}
+Товары
+{% endblock %}
+
+{% block header %}
+Товары
+{% endblock %}
+
+{% block content %}
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete Order #{{ order.id }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'order_base.html' %}
+
+{% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+Заказы
+{% endblock %}
+
+{% block content %}
+    <h2>
+        {% if order.id %}
+            Update
+        {% else %}
+            Create
+        {% endif %}
+        Order
+    </h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,9 @@
+.card-fixed-height {
+    height: 400px; /* Вы можете изменить это значение в соответствии с вашими нуждами */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-fixed-height .card-body {
+    flex-grow: 1;
+}

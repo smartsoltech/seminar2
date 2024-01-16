@@ -1,0 +1,17 @@
+{% extends 'order_base.html' %}
+
+{% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+заказы
+{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for order in orders %}
+            <li>Order #{{ order.id }} - Client: {{ order.client.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
