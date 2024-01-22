@@ -1,11 +1,37 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Client, Product, Order
-from .forms import ClientForm, ProductForm, OrderForm
+from .forms import ClientForm, ProductForm, OrderForm, OrderFilterForm
 from .logger import log_function_call, logging
+from django.utils import timezone
+from datetime import timedelta
 
 logger = logging.getLogger(__name__)
+
 def start_view(request):
     return render(request, 'base.html')
+
+
+def order_view(request):
+    form = OrderFilterForm(request.GET)
+    orders = Order.objects.all()
+
+    if form.is_valid():
+        choice = form.cleaned_data.get('time_period')
+
+        if choice == 'week':
+            date_from = timezone.now() - timedelta(days=7)
+        elif choice == 'month':
+            date_from = timezone.now() - timedelta(days=30)
+        elif choice == 'year':
+            date_from = timezone.now() - timedelta(days=365)
+        elif choice == 'all':
+            date_from = None
+
+        if date_from:
+            orders = orders.filter(created_at__gte=date_from)
+
+    return render(request, 'order_view.html', {'form': form, 'orders': orders})
+
 
 # Client Views
 
@@ -87,8 +113,22 @@ def product_update(request, pk):
 
 @log_function_call(logger)
 def order_list(request):
+    form = OrderFilterForm(request.GET or None)
     orders = Order.objects.all()
-    return render(request, 'order_list.html', {'orders': orders})
+    start_date = timezone.now() - timedelta(weeks=1)  # Для фильтра по умолчанию на одну неделю
+    if form.is_valid():
+        filter_choice = form.cleaned_data.get('time_filter')
+
+        if filter_choice == 'week':
+            start_date = timezone.now() - timedelta(weeks=1)
+        elif filter_choice == 'month':
+            start_date = timezone.now() - timedelta(weeks=4)
+        elif filter_choice == 'year':
+            start_date = timezone.now() - timedelta(weeks=52)
+
+        orders = orders.filter(order_date__gte=start_date)
+
+    return render(request, 'order_list.html', {'form': form, 'orders': orders})
 
 @log_function_call(logger)
 def order_create(request):
@@ -116,6 +156,6 @@ def order_delete(request, pk):
     return render(request, 'order_delete.html', {'order': order})
 
 @log_function_call(logger)
-def order_view(request, pk):
+def order_detail_view(request, pk):
     order = get_object_or_404(Order, pk=pk)
-    return render(request, 'order_view.html', {'order': order})
+    return render(request, 'order_detail.html', {'order': order})

@@ -1,0 +1,55 @@
+{% load my_filters %}
+{% extends 'order_base.html' %}
+
+{% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+Заказы
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="container">
+        <form method="get">
+            {{ form.as_p }}
+            <button type="submit">Фильтровать</button>
+        </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                    <th>Номер заказа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if orders %}
+                    {% for order in orders %}
+                        {% for item in order.order_items.all %}
+                            <tr>
+                                <td>{{ order.order_date }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.product.price }}</td>
+                                <td>{{ item.quantity|floatformat:2|multiply:item.product.price|floatformat:2 }}</td>
+                                <td>{{ order.id }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">Нет заказов.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
