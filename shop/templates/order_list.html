@@ -1,32 +1,55 @@
 {% extends 'order_base.html' %}
+{% load my_filters %}
 
 {% block title %}
 Заказы
 {% endblock %}
 
 {% block header %}
-заказы
+Заказы
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        {% for order in orders %}
-        <div class="col-md-6 mb-6">
-            <div class="card h-300">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ order.client.name }}</h4>
-                        <p class="card-text">{{ order.product.name }}</p>
-                    </div>
-                </div>
-            </div>
-            {% if forloop.counter|divisibleby:3 and not forloop.last %}
-                </div><div class="row">
-            {% endif %}
-        {% endfor %}
+    <div class="container">
+        <form method="get">
+            {{ form.as_p }}
+            <button type="submit">Фильтровать</button>
+        </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                    <th>Номер заказа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if orders %}
+                    {% for order in orders %}
+                        {% for item in order.order_items.all %}
+                            <tr>
+                                <td>{{ order.order_date }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.product.price }}</td>
+                                <td>{{ item.quantity|floatformat:2|multiply:item.product.price|floatformat:2 }}</td>
+                                <td>{{ order.id }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">Нет заказов.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}
-
-
 
