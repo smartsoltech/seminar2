@@ -1,0 +1,70 @@
+{% extends 'order_base.html' %}
+
+{% comment %} {% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+заказы
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-6 mb-6">
+            <div class="card h-300">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ order.client.name }}</h4>
+                        <p class="card-text">{{ order.product.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} {% endcomment %}
+
+{% block title %}
+Заказы
+{% endblock %}
+
+{% block header %}
+Заказы
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if orders %}
+            {% for order in orders %}
+                <div class="col-md-6 mb-6">
+                    <!-- Обертка карточки в ссылку -->
+                    <a href="{% url 'order-view' order.id %}" class="card-link">
+                        <div class="card h-300">
+                            <div class="card-body">
+                                <h4 class="card-title">Заказ от {{ order.client.name }}</h4>
+                                <h6>Товары в заказе:</h6>
+                                <ul>
+                                    {% for product in order.product.all %}
+                                        <li>{{ product.name }} (Количество: {{ product.quantity }})</li>
+                                    {% endfor %}
+                                </ul>
+                                <p class="card-text">Общая сумма: {{ order.total_amount }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Нет заказов.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

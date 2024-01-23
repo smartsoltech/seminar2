@@ -1,0 +1,45 @@
+{% extends 'order_base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- ... -->
+    <div class="row">
+        <div class="col">
+            <form method="get">
+                {{ form.as_p }}
+                <button type="submit">Фильтровать</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <!-- Таблица заказов -->
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Дата заказа</th>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                            <th>Общая сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.created_at }}</td>
+                            <td>
+                                {% for product in order.products.all %}
+                                    {{ product.name }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ order.products.count }}</td>
+                            <td>{{ order.total_amount }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
