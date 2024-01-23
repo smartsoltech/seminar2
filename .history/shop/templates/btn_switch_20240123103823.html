@@ -1,0 +1,33 @@
+<script>
+    // Находим кнопки по их id
+    var editButton = document.getElementById('editButton');
+    var saveButton = document.getElementById('saveButton');
+
+    // Функция для деактивации кнопки Редактировать
+    function disableEditButton() {
+        editButton.classList.add('disabled'); // Добавляем класс disabled
+        editButton.setAttribute('disabled', 'disabled'); // Добавляем атрибут disabled
+    }
+
+    // Функция для активации кнопки Редактировать
+    function enableEditButton() {
+        editButton.classList.remove('disabled'); // Удаляем класс disabled
+        editButton.removeAttribute('disabled'); // Удаляем атрибут disabled
+    }
+
+    // Функция для деактивации кнопки Сохранить
+    function disableSaveButton() {
+        saveButton.classList.add('disabled'); // Добавляем класс disabled
+        saveButton.setAttribute('disabled', 'disabled'); // Добавляем атрибут disabled
+    }
+
+    // Функция для активации кнопки Сохранить
+    function enableSaveButton() {
+        saveButton.classList.remove('disabled'); // Удаляем класс disabled
+        saveButton.removeAttribute('disabled'); // Удаляем атрибут disabled
+    }
+
+    // Пример использования:
+    // Вызывайте функции disableEditButton() и enableEditButton() при необходимости
+    // Вызывайте функции disableSaveButton() и enableSaveButton() при необходимости
+</script>
