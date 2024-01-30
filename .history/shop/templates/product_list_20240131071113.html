@@ -1,0 +1,38 @@
+{% extends 'product_base.html' %}
+
+
+
+{% block title %}
+Товары
+{% endblock %}
+
+{% block header %}
+Товары
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+            <a href="{% url 'product_detail' product.id %}"> <!-- Замените 'product_detail' на имя вашего URL-шаблона для подробного описания товара -->
+                <div class="card h-100">
+                    <img class="card-img-top w-100 d-block" src="{{ product.image }}" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">{{ product.price }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% if forloop.counter|divisibleby:4 and not forloop.last %} <!-- Изменено на divisibleby:4 -->
+            </div><div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,35 @@
+{% extends 'product_base.html' %}
+
+
+
+{% block title %}
+{{ product.name }} - Product Page | MyShop
+{% endblock %}
+
+{% block header %}
+<div class="header-content">
+    <h5>{{ product.name }} Details</h5>
+    <p><a href="/products/">Back to all products</a></p>
+</div>  
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-xl-12">
+            <div class="card"><img class="card-img w-100 d-block" />
+                <div class="card-img-overlay">
+                    <h4>Наименование: {{ product.name }}</h4>
+                    <p>Цена: {{ product.price}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br>
+{% endblock %}
